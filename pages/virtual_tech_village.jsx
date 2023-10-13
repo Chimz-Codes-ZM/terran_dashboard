@@ -103,7 +103,7 @@ const ExpandedCompanyModal = ({
               {/* THIS NEEDS TO BE FIXED ASAP */}
             </a>
 
-            <Link href={`/virtual_tech_village/company_info/${user_id}`}>
+            <Link href={`/company_info/${user_id}`}>
               <BsFillInfoCircleFill />
             </Link>
           </div>
@@ -208,12 +208,12 @@ const Virtual_Tech_Village = () => {
   };
 
   const handleMoreInfoClick = (modalId) => {
-    router.push(`/virtual_tech_village/member_info/${modalId}`);
+    router.push(`/member_info/${modalId}`);
   };
 
   const handleChatClick = (modalId) => {
     router.push(
-      `/virtual_tech_village/inbox/${memberList.user[0].user_id}/${modalId}`
+      `/inbox/${memberList.user[0].user_id}/${modalId}`
     );
   };
 
@@ -237,11 +237,11 @@ const Virtual_Tech_Village = () => {
   };
 
   const profileReroute = () => {
-    router.push("/virtual_tech_village/complete_profile");
+    router.push("/complete_profile");
   };
 
   const companyProfileReroute = () => {
-    router.push("/virtual_tech_village/complete_company_profile");
+    router.push("/complete_company_profile");
   };
 
   const handlePageFetch = () => {
@@ -568,14 +568,14 @@ const Virtual_Tech_Village = () => {
           </form>
         </div>
 
-        {incompleteProfile && (
+        {/* {incompleteProfile && (
             <div className="fixed inset-0 flex items-center justify-center z-[99] bg-slate-900  bg-opacity-20 transition delay-150 backdrop-blur-sm">
               <Complete_Profile
                 message="Your profile is incomplete! Please complete setting up your profile."
                 alertDismiss={profileReroute}
               />
             </div>
-          )}
+          )} */}
 
         {incompleteCompanyProfile && (
           <div className="fixed inset-0 flex items-center justify-center z-[99] bg-slate-900  bg-opacity-20 transition delay-150 backdrop-blur-sm">
@@ -650,11 +650,11 @@ const Virtual_Tech_Village = () => {
                 <div className="flex gap-2" key={pageNumber}>
                   <button
                     onClick={() => handlePageClick(pageNumber)}
-                    className={`inline-block rounded-full border bg-gray-900 border-gray-900 p-3 transition-colors delay-75 ${
+                    className={`inline-block rounded-full border border-[#256B58] p-3 transition-colors delay-75 ${
                       pageNumber === activePage
-                        ? "bg-transparent text-gray-900 cursor-not-allowed"
-                        : "text-white"
-                    }  hover:bg-transparent hover:text-gray-900 focus:outline-none focus:ring active:text-indigo-500`}
+                        ? "bg-transparent text-[#256B58] cursor-not-allowed"
+                        : "text-white bg-[#256B58]"
+                    }  hover:bg-transparent hover:text-[#256B58] focus:outline-none focus:ring active:text-indigo-500`}
                     disabled={activePage === pageNumber}
                   >
                     {pageNumber}

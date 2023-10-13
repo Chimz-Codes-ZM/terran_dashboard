@@ -39,9 +39,7 @@ const Resume_component = ({
                 {/* <!-- Contact 1 --> */}
                 <div className="ml-3">
                   <p className="mb-0 font-semibold text-sm">Country</p>
-                  <p className="mb-0">
-                    <p>{country}</p>
-                  </p>
+                  <p className="mb-0">{country} </p>
                 </div>
               </div>
 
@@ -68,11 +66,11 @@ const Resume_component = ({
                 {/* <!-- Contact 3 --> */}
                 <div className="ml-3">
                   <p className="mb-0 font-semibold text-sm">Linkedin</p>
-                  <p className="mb-0">
+                 
                     <a href={linkedin} target="_blank" rel="noreferrer">
                       {linkedin}
                     </a>
-                  </p>
+                  
                 </div>
               </div>
             </div>

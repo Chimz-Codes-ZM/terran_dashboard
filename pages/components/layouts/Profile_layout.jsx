@@ -6,24 +6,24 @@ const Profile_layout = ({ children, title }) => {
     <div className="w-full flex flex-col lg:flex-row gap-5">
       <div className="w-48 gap-3 flex flex-col flex-shrink-0">
         <div className="w-full flex flex-col gap-2">
-          <h1 className="text-green-600">Virtual Tech Village</h1>
+          <h1 className="text-[#256B58]">Virtual Tech Village</h1>
           <div className="w-full flex flex-col gap-2 pl-2">
-            <Link href="/virtual_tech_village/profile">
+            <Link href="/profile">
               <h1
                 className={
                   title === "view profile"
-                    ? "border-l-4 pl-2 border-green-600"
+                    ? "border-l-4 pl-2 border-[#256B58]"
                     : "hover:border-l-4 pl-2"
                 }
               >
                 View Profile
               </h1>
             </Link>
-            <Link href="/virtual_tech_village/edit_profile">
+            <Link href="/edit_profile">
               <h1
                 className={
                   title === "edit profile"
-                    ? "border-l-4 pl-2 border-green-600"
+                    ? "border-l-4 pl-2 border-[#256B58]"
                     : "hover:border-l-4 pl-2"
                 }
               >

@@ -4,13 +4,13 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import ContextProvider from "../conext/context";
-
+import useWebSocket, { ReadyState } from "react-use-websocket";
 import axios from "axios";
 import { signOut } from "next-auth/react";
 
 import jwt_decode from "jwt-decode";
 
-import Logo from "/public/logo.png";
+import Logo from "/public/Terran Community Logo.png";
 import { SiHomeassistantcommunitystore } from "react-icons/si";
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
 import { FaSlideshare } from "react-icons/fa";
@@ -22,6 +22,8 @@ import { useSession } from "next-auth/react";
 
 const Layout = ({ children, sideHighlight }) => {
   const [userData, setUserData] = useState(null);
+  const [unreadMessageCount, setUnreadMessageCount] = useState(null)
+  const [id, setId] = useState("")
   const router = useRouter();
 
   const handleLogout = () => {
@@ -29,7 +31,10 @@ const Layout = ({ children, sideHighlight }) => {
     router.push("/");
   };
 
+
   const { data: session } = useSession();
+
+
 
   useEffect(() => {
     if (session) {
@@ -40,7 +45,8 @@ const Layout = ({ children, sideHighlight }) => {
     const token = localStorage.getItem("token");
 
     const decodedToken = jwt_decode(token);
-    const id = decodedToken.user_id;
+    setId(decodedToken.user_id)
+  
 
     async function fetchData() {
       try {
@@ -61,6 +67,41 @@ const Layout = ({ children, sideHighlight }) => {
     console.log(userData);
   }, [userData]);
 
+  const { readyState } = useWebSocket(`wss://baobabpad-334a8864da0e.herokuapp.com/ws/chat_notifications/${id}/`, 
+  {
+    onOpen: () => {
+      console.log("Connected to Notifications!");
+    },
+    onClose: () => {
+      console.log("Disconnected from Notifications!");
+    },
+    onMessage: (e) => {
+      const data = JSON.parse(e.data);
+      switch (data.type) {
+        case "unread_count":
+          setUnreadMessageCount(data.unread_count);
+          console.log(data.unread_count)
+          break;
+        case "new_message_notification":
+          setUnreadMessageCount((count) => (count += 1));
+          break;
+        default:
+          console.error("Unknown message type!");
+          break;
+      }
+    },
+    retryOnError: true,
+  }
+  )
+
+
+  const connectionStatus = {
+    [ReadyState.CONNECTING]: "Connecting",
+    [ReadyState.OPEN]: "Open",
+    [ReadyState.CLOSING]: "Closing",
+    [ReadyState.CLOSED]: "Closed",
+    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
+  }[readyState];
   return (
     <>
       <main className="h-screen w-screen flex relative">
@@ -70,24 +111,21 @@ const Layout = ({ children, sideHighlight }) => {
               className="w-full pl-5 flex-shrink-0 h-20 gap-4 flex items-center cursor-pointer"
               onClick={signOut}
             >
-              <div className="relative w-10 h-10 rounded">
+              <div className="relative md:h-20 md:w-40 h-10 w-20 rounded">
                 <Image src={Logo} priority alt="logo" fill />
               </div>
-              <h1 className="font-bold text-gray-800 hidden sm:block">
-                Baobabpad
-              </h1>
             </div>
 
-            <div className="h-full pl-5 pb-10 rounded-tr-2xl flex flex-col bg-gray-900 w-full justify-between">
+            <div className="h-full pl-5 pb-10 rounded-tr-2xl flex flex-col bg-[#256B58] w-full justify-between">
               <div className="w-full h-max flex flex-col gap-2 pr-5 pt-10">
                 <div className="w-full flex flex-col">
                   <Link href="/">
                     <div
-                      className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
+                      className={`flex transition-all duration-500  gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "Tech Village"
-                          ? "font-bold bg-gray-100 text-gray-900"
-                          : "hover:font-bold hover:bg-gray-100 hover:text-gray-800"
+                          ? "font-bold bg-gray-100 text-[#256B58]"
+                          : "hover:font-bold hover:bg-gray-100 hover:text-[#256B58]"
                       }
 										`}
                     >
@@ -103,8 +141,8 @@ const Layout = ({ children, sideHighlight }) => {
                       className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "connect"
-                          ? "font-bold bg-gray-100 text-gray-900"
-                          : " hover:font-bold hover:bg-gray-100 hover:text-gray-800"
+                        ? "font-bold bg-gray-100 text-[#256B58]"
+                        : "hover:font-bold hover:bg-gray-100 hover:text-[#256B58]"
                       }
 										`}
                     >
@@ -120,8 +158,8 @@ const Layout = ({ children, sideHighlight }) => {
                       className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "sharepad"
-                          ? "font-bold bg-gray-100 text-gray-900"
-                          : " hover:font-bold hover:bg-gray-100 hover:text-gray-800"
+                        ? "font-bold bg-gray-100 text-[#256B58]"
+                        : "hover:font-bold hover:bg-gray-100 hover:text-[#256B58]"
                       }
 										`}
                     >
@@ -137,8 +175,8 @@ const Layout = ({ children, sideHighlight }) => {
                       className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "inbox"
-                          ? "font-bold bg-gray-100 text-gray-900"
-                          : " hover:font-bold hover:bg-gray-100 hover:text-gray-800"
+                        ? "font-bold bg-gray-100 text-[#256B58]"
+                        : "hover:font-bold hover:bg-gray-100 hover:text-[#256B58]"
                       }
 										`}
                     >
@@ -154,8 +192,8 @@ const Layout = ({ children, sideHighlight }) => {
                       className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "profile"
-                          ? "font-bold bg-gray-100 text-gray-900"
-                          : " hover:font-bold hover:bg-gray-100 hover:text-gray-800"
+                        ? "font-bold bg-gray-100 text-[#256B58]"
+                        : "hover:font-bold hover:bg-gray-100 hover:text-[#256B58]"
                       }
 										`}
                     >
@@ -170,7 +208,7 @@ const Layout = ({ children, sideHighlight }) => {
                 <div className="w-full flex flex-col">
                   <div href="/" className="" onClick={signOut}>
                     <div
-                      className="flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1 text-gray-100 hover:font-bold hover:bg-gray-100 hover:text-gray-800 cursor-pointer "
+                      className="flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1 text-gray-100 hover:font-bold hover:bg-gray-100 hover:text-[#256B58] cursor-pointer "
                       onClick={handleLogout}
                     >
                       <BiLogOut className="text-xl logout" />
@@ -183,7 +221,8 @@ const Layout = ({ children, sideHighlight }) => {
           </div>
         </nav>
         <nav className="fixed bg-white top-0 left-0 w-full h-20 px-14 gap-4 flex justify-end items-center z-40">
-          <AiOutlineBell className="text-lg" />
+          <div className="relative"><AiOutlineBell className="text-lg" /><div className="absolute top-2 right-2">{unreadMessageCount}</div></div>
+          
 
           <Link href="/profile/">
             <div className="w-max truncate px-4 py-2 transition-all duration-500 hover:bg-gray-100 rounded cursor-pointer flex items-center gap-1 sm:gap-2 rounded">
@@ -214,7 +253,6 @@ const Layout = ({ children, sideHighlight }) => {
                   </div>
                 )}
               </div>
-{/*  */}
               <span className="text-sm truncate flex sm:max-w-[200px] font-bold">
                 {userData &&
                   (userData[0]?.account_type === "village talent profile" ||

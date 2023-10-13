@@ -22,8 +22,8 @@ const Index = () => {
   const { id } = router.query;
   const [error, setError] = useState(null);
   const [userData, setUserData] = useState([]);
-  const [avatarUrl, setAvatarUrl] = useState("");
-  const [chatName, setChatName] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState(null);
+  const [chatName, setChatName] = useState(null);
 
   const [message, setMessage] = useState([]);
   const [messageHistory, setMessageHistory] = useState([]);
@@ -38,6 +38,9 @@ const Index = () => {
   const [messageText, setMessageText] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const inputRef = useRef(null);
+
+  const usersName = chatName ? chatName : ""
+  const userPicture = avatarUrl ? avatarUrl : ""
 
   // WEBSOCKET CONNECTION
 
@@ -73,6 +76,8 @@ const Index = () => {
     fetchData();
   }, []);
 
+  const currentSignedInName = `${userData[0]?.first_name} ${userData[0]?.last_name}`
+
   const { sendMessage, sendJsonMessage } = useWebSocket(
     `wss://baobabpad-334a8864da0e.herokuapp.com/ws/chat/${userId}/${userId}${uniqueRoom}/`
   );
@@ -107,12 +112,14 @@ const Index = () => {
             setHasMoreMessages(data.has_more);
             break;
           case "user_join":
+            console.log("User joined the conversation:", data.user)
             setParticipants((pcpts) => {
               if (!pcpts.includes(data.user)) {
                 return [...pcpts, data.user];
               }
               return pcpts;
             });
+          
             break;
           case "user_leave":
             setParticipants((pcpts) => {
@@ -183,13 +190,14 @@ const Index = () => {
     <>
       <Layout sideHighlight="inbox">
         <div className="flex custom-height">
-          <MessageList />
+          <div className="hidden lg:block"><MessageList /></div>
+          
 
           {/* CONVERSATION LIST */}
 
           <div className="relative grow shadow overflow-hidden h-[calc(100vh - 150px)] flex justify-center">
             <div className="grow relative p-4 py-1 overflow-hidden h-4/6 max-w-3xl">
-              <Toolbar names={chatName} avatar={avatarUrl} />
+              <Toolbar names={usersName} avatar={userPicture} />
               <div className="scrollbar">
                 <div
                   className="mx-auto max-w-6xl px-14 py-14 pb-32"

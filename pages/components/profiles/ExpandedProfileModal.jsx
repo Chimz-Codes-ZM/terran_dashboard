@@ -21,7 +21,7 @@ const ExpandedProfileModal = ({
   const router = useRouter();
 
   const handleMoreInfoClick = (modalId) => {
-    router.push(`/virtual_tech_village/member_profile/${modalId}`);
+    router.push(`/member_profile/${modalId}`);
   };
 
 

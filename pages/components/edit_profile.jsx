@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Profile_layout from "./Profile_layout";
+import Profile_layout from "./layouts/Profile_layout";
 import Layout from "./layouts/layout";
 import { FcPicture } from "react-icons/fc";
 import Link from "next/link";
@@ -488,7 +488,7 @@ const Edit_profile_component = () => {
           </div>
         </div>
 
-        <div className="border border-orange-400 p-3 w-full mt-4 rounded ">
+        <div className="border border-[#EFBE6D] p-3 w-full mt-4 rounded ">
           <div className="font-semibold text-xl w-fit self-center">
             <h2>Reset Password</h2>
           </div>
