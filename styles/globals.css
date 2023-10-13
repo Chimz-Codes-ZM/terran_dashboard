@@ -1,0 +1,367 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+
+* {
+  scroll-behavior: smooth;
+}
+
+.background {
+  background: #ffbd59;
+}
+
+.background-text {
+  color: #ffbd59;
+}
+
+.background-green {
+  background: #1d7874;
+}
+
+.glass {
+  background: rgba(0, 0, 0, 0.43);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.4px);
+  -webkit-backdrop-filter: blur(4.4px);
+}
+
+
+.background-green-border {
+  border: solid 2px #1d7874;
+}
+
+.background-green-text {
+  color: #1d7874;
+}
+
+.weird-shape {
+  border-radius : 50% 50% 46% 54% / 100% 100% 0% 0% 
+}
+
+.top-nav-dark {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.map {
+  height: 300px;
+  width: 300px;
+}
+
+
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Raleway', sans-serif;
+}
+
+.filter_{
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+.home_bg_main_img {
+  /* background-image: url('../public/assets/luderitz.jpg'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: "relative";
+}
+
+.home_bg_main_img::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+}
+
+
+
+.team_img {
+  /* background-image: url('../public/assets/ladies.jpg'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: "relative";
+}
+
+.team_img::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+}
+
+.about_img {
+  /* background-image: url('../public/assets/aboutB.jpg'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: "relative";
+}
+
+.about_img::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+}
+
+
+
+.startup_img {
+  /* background-image: url('../public/assets/startup.jpg'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: "relative";
+}
+
+.startup_img::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+}
+
+
+.hub_img {
+  /* background-image: url('../public/assets/village1.jpg'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: "relative";
+}
+
+.hub_img::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+}
+
+
+
+
+.text-gradient {
+  background: radial-gradient(
+    64.18% 64.18% at 71.16% 35.69%,
+    #def9fa 0.89%,
+    #bef3f5 17.23%,
+    #9dedf0 42.04%,
+    #7de7eb 55.12%,
+    #5ce1e6 71.54%,
+    #33bbcf 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.bg-blue-gradient {
+  background: linear-gradient(
+    157.81deg,
+    #def9fa -43.27%,
+    #bef3f5 -21.24%,
+    #9dedf0 12.19%,
+    #7de7eb 29.82%,
+    #5ce1e6 51.94%,
+    #33bbcf 90.29%
+  );
+}
+
+.bg-black-gradient {
+  background: linear-gradient(
+    144.39deg,
+    #ffffff -278.56%,
+    #6d6d6d -78.47%,
+    #11101d 91.61%
+  );
+}
+
+.bg-black-gradient-2 {
+  background: linear-gradient(
+    -168.39deg,
+    #ffffff -278.56%,
+    #6d6d6d -78.47%,
+    #11101d 91.61%
+  );
+}
+
+.bg-gray-gradient {
+  background: linear-gradient(
+    153.47deg,
+    rgba(255, 255, 255, 0) -341.94%,
+    #14101d 95.11%
+  );
+}
+
+.bg-discount-gradient {
+  background: linear-gradient(125.17deg, #272727 0%, #11101d 100%);
+}
+
+.box-shadow {
+  box-shadow: 0px 20px 100px -10px rgba(66, 71, 91, 0.1);
+}
+
+.text-gradient {
+  background: radial-gradient(
+    64.18% 64.18% at 71.16% 35.69%,
+    #def9fa 0.89%,
+    #bef3f5 17.23%,
+    #9dedf0 42.04%,
+    #7de7eb 55.12%,
+    #5ce1e6 71.54%,
+    #33bbcf 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+/* Rattle Animation */
+
+.animate-rattle {
+  animation-name: rattle;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+}
+
+@keyframes rattle {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(-2deg);
+  }
+  20% {
+    transform: rotate(2deg);
+  }
+  30% {
+    transform: rotate(-2deg);
+  }
+  40% {
+    transform: rotate(2deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+  60% {
+    transform: rotate(2deg);
+  }
+  70% {
+    transform: rotate(-2deg);
+  }
+  80% {
+    transform: rotate(2deg);
+  }
+  90% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+
+/* Hover over technical professional */
+
+.hovered .message {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.message {
+  opacity: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Responsive layout for form */
+@media screen and (max-width: 768px) {
+  form {
+    flex-direction: column;
+  }
+  
+  form > div {
+    margin-bottom: 10px;
+  }
+}
+
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+/* FADE IN AND OUT ANIMATION FOR VIRTUAL TECH VILLAGE COMPANY AND  MEMBER PROFILES */
+.openIt {
+  animation: fade-in 500ms forwards;
+}
+
+.closeIt {
+  animation: fade-out 500ms forwards;
+}
+
+
+/* Loading animation */
+
+@layer base {
+  path {
+    stroke-dasharray: 20;
+  }
+}
+
+
+/* Custom inbox height */
+
+.custom-height {
+  height: calc(100vh - 200px);
+}
+
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+}

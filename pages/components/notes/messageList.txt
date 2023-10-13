@@ -1,0 +1,45 @@
+import React, { useState } from "react";
+import Image from "next/image";
+import { MessageBubble } from "./conversationList";
+
+const MessageList = ({
+  conversations,
+  selectedConversation,
+  onConversationClick,
+  convoLabel,
+ 
+
+}) => {
+  const selectedConversationObj = conversations.find(
+    (convo) => convo.id === selectedConversation
+  );
+  return (
+    <div className="h-full w-72 ">
+      {conversations.map((convo) => (
+        <div
+          key={convo.id}
+          className={`flex gap-4  px-6 p-2 hover:bg-gray-100 transition-colors  delay-150 ease-in cursor-pointer ${
+            selectedConversation === convo.id ? "bg-gray-50" : "bg-white"
+          }`}
+          onClick={() => onConversationClick(convo.id)}
+        >
+          <div className="h-8 w-8 rounded-full bg-slate-600">
+            <Image
+              objectFit="cover"
+              layout="fixed"
+              src={convo.conversationImage}
+              alt="Profile Picture"
+              className="w-8 h-8 rounded-full mr-2"
+            />
+          </div>
+          <div className="flex items-center">
+            <h1 className=" text-sm ">{convo.label}</h1>
+          </div>
+        </div>
+      ))}
+     
+    </div>
+  );
+};
+
+export default MessageList;

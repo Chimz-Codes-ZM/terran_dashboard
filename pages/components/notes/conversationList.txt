@@ -1,0 +1,77 @@
+import React, { useState } from "react";
+import Toolbar from "./Toolbar";
+import MessageInput from "./MessageInput";
+import Image from "next/image";
+import Christina from "../../../../public/placeholders/christina.webp";
+import { conversationMessages } from "@/pages/data";
+
+export const MessageBubble = ({ message, isCurrentUser }) => {
+  return (
+    <div
+      className={`flex p-2 ${isCurrentUser ? "justify-end" : "justify-start"}`}
+    >
+      {!isCurrentUser && (
+        <Image
+          objectFit="cover"
+          layout="fixed"
+          src={Christina}
+          alt="Profile Picture"
+          className="w-8 h-8 rounded-full mr-2"
+        />
+      )}
+      <div
+        className={`bg-gray-300 p-3 rounded-lg ${
+          isCurrentUser
+            ? "bg-slate-800 text-white"
+            : "bg-white text-gray-800 shadow"
+        }`}
+      >
+        {message}
+      </div>
+    </div>
+  );
+};
+
+const ConversationList = ({
+  selectedConversation,
+  convoLabel,
+  onSendMessage,
+}) => {
+  const [messageText, setMessageText] = useState("");
+  const [messages, setMessages] = useState({});
+
+  const messageList = conversationMessages[selectedConversation] || [];
+  const combinedMessages = [...messageList, ...(messages[selectedConversation] || [])];
+
+  const handleSendMessage = (messageText) => {
+    const newMessage = { text: messageText, isCurrentUser: true };
+    setMessages((prevMessages) => ({
+      ...prevMessages,
+      [selectedConversation]: [...(prevMessages[selectedConversation] || []), newMessage],
+    }));
+  };
+  return (
+    <div className="grow shadow relative p-4 py-1">
+      <Toolbar convoLabel={convoLabel} />
+      <div className=" scrollbar">
+        <div
+          className="mx-auto max-w-6xl p-4 pb-32 "
+          style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}
+        >
+          {combinedMessages.map((message, index) => (
+            <MessageBubble
+              key={index}
+              message={message.text}
+              isCurrentUser={message.isCurrentUser}
+            />
+          ))}
+         
+        </div>
+      </div>
+
+      <MessageInput onSendMessage={handleSendMessage} />
+    </div>
+  );
+};
+
+export default ConversationList;

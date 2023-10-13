@@ -1,0 +1,101 @@
+import React, { useState, useEffect, useRef } from "react";
+import { AiOutlineSend} from "react-icons/ai"
+
+const MessageInput = ({ onSendMessage }) => {
+  const [messageText, setMessageText] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const inputRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (inputRef.current && !inputRef.current.contains(event.target)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleSendClick = () => {
+    if (messageText.trim() !== "") {
+      onSendMessage(messageText);
+      setMessageText("");
+    }
+  };
+
+  return (
+    <div className="relative border ">
+      <div className="absolute bottom-4 px-10 p-1 left-10 right-10 rounded">
+        <div className="relative flex gap-2">
+          <div className="relative grow">
+            <textarea
+              id="OrderNotes"
+              class="mt-2 w-full rounded-lg border-gray-200 align-top shadow border sm:text-sm relative p-1 px-2"
+              rows="4"
+              placeholder="Enter message..."
+              value={messageText}
+              onChange={e => setMessageText(e.target.value)}
+            ></textarea>
+               <button
+            onClick={toggleMenu}
+            className="absolute top-8 right-2 bg-gray-400 text-white p-1 rounded-full"
+            style={{ cursor: "pointer" }}
+          >
+            +
+          </button>
+          </div>
+
+       
+          <button onClick={handleSendClick} className="bg-black text-white rounded p-1 px-2 h-8 border self-center"><AiOutlineSend /></button>
+        </div>
+        {isMenuOpen && (
+          <div
+            className="mt-2 p-2 bottom-10 right-3  rounded  absolute"
+            ref={inputRef}
+          >
+            {/* Menu content (file types) */}
+            <div
+              class=" end-0 z-10 mt-2 w-56 rounded-md border border-gray-100 bg-white shadow-lg"
+              role="menu"
+            >
+              <div class="p-2">
+                <a
+                  href="#"
+                  class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  role="menuitem"
+                >
+                  Image
+                </a>
+
+                <a
+                  href="#"
+                  class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  role="menuitem"
+                >
+                  Document
+                </a>
+
+                <a
+                  href="#"
+                  class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  role="menuitem"
+                >
+                  Video
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default MessageInput;

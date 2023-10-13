@@ -1,0 +1,94 @@
+import React, { useEffect, useState, useContext } from "react";
+import Layout from "../layouts/layout";
+import Head from "next/head";
+import { useSession } from "next-auth/react";
+import jwt_decode from "jwt-decode";
+import axios from 'axios';
+import useWebSocket, { ReadyState } from "react-use-websocket";
+
+
+import { JellyTriangle } from "@uiball/loaders";
+
+
+
+const Inbox = () => {
+
+  const [userData, setUserData] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [secret, setSecret] = useState(null);
+  const [showChat, setShowChat] = useState(null);
+  const [userCredentials, setUserCredentials] = useState(false);
+  const email = userData ? `${userData[0].email}` : ""
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+      if (session) {
+        localStorage.setItem("token", session.access);
+        console.log(session);
+      }
+      const token = localStorage.getItem("token");
+  
+      const decodedToken = jwt_decode(token);
+      const id = decodedToken.user_id;
+  
+      async function fetchData() {
+        try {
+          const response = await axios.get(
+            `https://baobabpad-334a8864da0e.herokuapp.com/village/profile_data/${id}/`
+          );
+          setUserData(response.data);
+  
+          if (response.data) {
+            axios
+              .post(
+                `https://baobabpad-334a8864da0e.herokuapp.com/village/chat_engine/${id}/`,
+                {
+                  email: email,
+                }
+              )
+              .then((postResponse) => {
+                console.log(postResponse);
+                setUserCredentials(postResponse);
+                setUsername(postResponse.data.username)
+                setSecret(postResponse.data.secret)
+              })
+  
+              .catch((postError) => {
+                console.error("Error making POST request:", postError);
+              });
+          }
+        } catch (error) {
+          console.error("Error fetching data: ", error);
+        }
+      }
+  
+      fetchData();
+    }, []);
+
+
+  useEffect(() => {
+    if(typeof document !== null) {
+      setShowChat(true)
+    }
+  }, [])
+
+  if(!showChat) return <div />
+
+
+  return (
+    <>
+      <Head>
+        <title>Inbox</title>
+      </Head>
+      <Layout sideHighlight="inbox">
+     <div>
+        <span>The WebSocket is currently {connectionStatus}</span>
+        <p>{welcomeMessage}</p>
+      </div>
+      </Layout>
+    </>
+  );
+};
+
+export default Inbox;
