@@ -46,12 +46,13 @@ const Layout = ({ children, sideHighlight }) => {
 
     const decodedToken = jwt_decode(token);
     setId(decodedToken.user_id)
+    const user_id = decodedToken.user_id
   
 
     async function fetchData() {
       try {
         const response = await axios.get(
-          `https://baobabpad-334a8864da0e.herokuapp.com/village/profile_data/${id}/`
+          `https://baobabpad-334a8864da0e.herokuapp.com/village/profile_data/${user_id}/`
         );
         setUserData(response.data);
         // console.log(response.data);
