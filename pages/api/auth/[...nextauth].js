@@ -47,46 +47,29 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn({user, account, profile, email, credentials}) {
+    async signIn({ user, account, profile, email, credentials }) {
       if (!SIGN_IN_PROVIDERS.includes(account.provider)) return false;
       return SIGN_IN_HANDLERS[account.provider](
         user, account, profile, email, credentials
       );
     },
-    async jwt({user, token, account}) {
+    async jwt({ user, token, account }) {
       if (user && account) {
         let backendResponse = account.provider === "credentials" ? user : account.meta;
-        token["user"] = backendResponse.user;
-        token["access"] = backendResponse.access;
-        token["refresh"] = backendResponse.refresh;
-        token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
+        token.user = backendResponse.user;
+        token.access = backendResponse.access;
+        token.refresh = backendResponse.refresh;
+        token.ref = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
         return token;
       }
       return token;
     },
-
-    async session({token}) {
-      return token;
+  
+    async session({ user, token }) {
+      return { ...token, user };
     },
-  }, 
-
-  // callback: {
-  //           jwt: async ({ token, user}) => {
-  //               if (user) {
-  //                   token.id = user.id
-  //               }
-    
-  //               return token
-  //           },
-    
-  //           session: async ({ token, session }) => {
-  //               if (token) {
-  //                   session.id = token.id
-  //               }
-    
-  //               return session
-  //           },
-  //       },
+  },
+  
   pages: {
     signIn: "/login",
     },

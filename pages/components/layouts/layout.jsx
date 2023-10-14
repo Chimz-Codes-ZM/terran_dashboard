@@ -98,6 +98,7 @@ const Layout = ({ children, sideHighlight }) => {
           setUnreadMessageCount((count) => (count += 1));
           setUnreadMessageCount(data.count)
           console.log(data.content)
+          console.log(data.route)
           setNotificationContent(data.content)
           break;
         default:
@@ -248,6 +249,7 @@ const Layout = ({ children, sideHighlight }) => {
           </div>
         </nav>
         <nav className="fixed bg-white top-0 left-0 w-full h-20 px-14 gap-4 flex justify-end items-center z-40">
+          {connectionStatus}
           <div className="relative"><AiOutlineBell className="text-lg cursor-pointer" onClick={handleShowNotification}/>
             <div className="absolute -top-2 -right-2">{unreadMessageCount > 0 ? unreadMessageCount : ""}</div>
             <div ref={notificationRef}>
