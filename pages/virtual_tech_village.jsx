@@ -126,6 +126,7 @@ const Virtual_Tech_Village = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const expandedProfileRef = useRef(null);
   const expandedCompanyRef = useRef(null);
+  const memberStartRef = useRef(null)
 
   const [talentPages, setTalentPages] = useState([]);
   const [user, setUser] = useState(null);
@@ -178,10 +179,14 @@ const Virtual_Tech_Village = () => {
 
     setIsLoading(false);
   };
+  const scrollToTop = () => {
+    memberStartRef.current?.scrollIntoView({ behavior: "smooth"})
+  }
 
   useEffect(() => {
     console.log(memberList);
     checkProfileComplete()
+    scrollToTop()
   }, [memberList]);
 
   const { companies, individuals } = memberList || {
@@ -474,8 +479,10 @@ const Virtual_Tech_Village = () => {
     setCompany(companyInfo);
   };
 
+
   return (
     <div className="flex flex-col gap-5 relative" ref={parent}>
+            <div ref={memberStartRef}></div>
       <div className="flex flex-col md:flex-row md:justify-between md:flex-wrap gap-2">
         <div className="flex flex-wrap gap-4">
           {(memberList.user[0].account_type === "village talent profile" || memberList.user[0].account_type === "village admin profile") && (
@@ -586,6 +593,7 @@ const Virtual_Tech_Village = () => {
           </div>
         )}
       </div>
+
       {(memberList.user[0]?.account_type === "village talent profile" || memberList.user[0].account_type === "village admin profile") && (
         <AnimatePresence>
           {memberShow && (
@@ -650,11 +658,11 @@ const Virtual_Tech_Village = () => {
                 <div className="flex gap-2" key={pageNumber}>
                   <button
                     onClick={() => handlePageClick(pageNumber)}
-                    className={`inline-block rounded-full border border-[#256B58] p-3 transition-colors delay-75 ${
+                    className={`inline-block rounded-full border border-black p-3 transition-colors delay-75 ${
                       pageNumber === activePage
-                        ? "bg-transparent text-[#256B58] cursor-not-allowed"
-                        : "text-white bg-[#256B58]"
-                    }  hover:bg-transparent hover:text-[#256B58] focus:outline-none focus:ring active:text-indigo-500`}
+                        ? "bg-transparent text-black cursor-not-allowed"
+                        : "text-white bg-black"
+                    }  hover:bg-transparent hover:text-black focus:outline-none focus:ring active:text-indigo-500`}
                     disabled={activePage === pageNumber}
                   >
                     {pageNumber}

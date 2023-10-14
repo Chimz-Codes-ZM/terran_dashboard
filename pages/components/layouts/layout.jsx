@@ -98,7 +98,6 @@ const Layout = ({ children, sideHighlight }) => {
           setUnreadMessageCount((count) => (count += 1));
           setUnreadMessageCount(data.count)
           console.log(data.content)
-          console.log(data.route)
           setNotificationContent(data.content)
           break;
         default:
@@ -264,10 +263,9 @@ const Layout = ({ children, sideHighlight }) => {
     role="menu"
   >
     {notificationContent && notificationContent.length > 0 ? (
-      // Render notifications when notificationContent is not empty
       notificationContent.map((notification, index) => (
         <div className="p-2" key={index}>
-          <Link href={`/inbox/${notification.conversation_name}`}>
+          <Link href={`/${notification.route}`}>
             <div
               href="#"
               className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"

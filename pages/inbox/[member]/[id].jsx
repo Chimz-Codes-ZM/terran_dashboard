@@ -78,11 +78,9 @@ const Index = () => {
 
   const currentSignedInName = `${userData[0]?.first_name} ${userData[0]?.last_name}`
 
-  const { sendMessage, sendJsonMessage } = useWebSocket(
-    `wss://baobabpad-334a8864da0e.herokuapp.com/ws/chat/${userId}/${userId}${uniqueRoom}/`
-  );
 
-  const { readyState } = useWebSocket(
+
+  const { readyState, sendMessage, sendJsonMessage } = useWebSocket(
     `wss://baobabpad-334a8864da0e.herokuapp.com/ws/chat/${userId}/${userId}${uniqueRoom}/`,
     {
       onOpen: () => {
@@ -204,7 +202,7 @@ scrollToBottom()
 
           {/* CONVERSATION LIST */}
 
-          <div className="relative grow shadow overflow-hidden h-[calc(100vh - 150px)] flex justify-center">
+          <div className="relative grow shadow overflow-hidden h-full flex justify-center">
             <div className="grow relative p-4 py-1 overflow-hidden max-h-[450px] pt-10 max-w-3xl">
               <Toolbar names={usersName} avatar={userPicture} />
               <div className="scrollbar h-full">
