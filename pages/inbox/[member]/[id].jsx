@@ -87,6 +87,9 @@ const Index = () => {
     {
       onOpen: () => {
         console.log("Connected");
+        sendJsonMessage({
+          type: "read_messages",
+        });
       },
       onClose: () => {
         console.log("Disconnected!");
