@@ -20,10 +20,6 @@ const ExpandedProfileModal = ({
 
   const router = useRouter();
 
-  const handleMoreInfoClick = (modalId) => {
-    router.push(`/member_profile/${modalId}`);
-  };
-
 
   return (
     <div className="">
@@ -50,16 +46,16 @@ const ExpandedProfileModal = ({
                 href="https://www.linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 hover:underline w-full"
+                className="text-black hover:underline w-full"
               >
                 <BsLinkedin className="w-8 h-8" />
               </a>
               
-                <div className="text-blue-500 hover:underline cursor-pointer w-full" onClick={onClick}>
+                <div className="text-black hover:underline cursor-pointer w-full" onClick={onClick}>
                   <BsInfoSquare className="w-8 h-8" />
                 </div>
 
-                <div className="text-blue-500 hover:underline cursor-pointer w-full" onClick={handleChat}>
+                <div className="text-black hover:underline cursor-pointer w-full" onClick={handleChat}>
                   <BsFillChatQuoteFill className="w-8 h-8"/>
                 </div>
               
@@ -77,7 +73,7 @@ const ExpandedProfileModal = ({
             {/* Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border p-4 rounded-lg shadow-md">
-                <h2 className="text-lg font-semibold">Completed Courses</h2>
+                <h2 className="text-lg font-semibold">Education</h2>
                 <p className="text-sm font-light italic">{certificate}</p>
               </div>
               <div className="border p-4 rounded-lg shadow-md">
@@ -89,7 +85,7 @@ const ExpandedProfileModal = ({
                 <p className="text-sm font-light italic">{country}</p>
               </div>
               <div className="border p-4 rounded-lg shadow-md">
-                <h2 className="text-lg font-semibold">Resources</h2>
+                <h2 className="text-lg font-semibold">Language</h2>
               </div>
             </div>
           </div>

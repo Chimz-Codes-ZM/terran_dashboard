@@ -67,8 +67,9 @@ const Layout = ({ children, sideHighlight }) => {
   useEffect(() => {
     console.log(userData);
   }, [userData]);
+  
 
-  const { readyState } = useWebSocket(`wss://baobabpad-334a8864da0e.herokuapp.com/ws/chat_notifications/${id}/`, 
+  const { readyState, sendJsonMessage } = useWebSocket(`wss://baobabpad-334a8864da0e.herokuapp.com/ws/chat_notifications/${id}/`, 
   {
     onOpen: () => {
       console.log("Connected to Notifications!");
@@ -95,6 +96,12 @@ const Layout = ({ children, sideHighlight }) => {
   }
   )
 
+  const handleSendNotification = () => {
+    sendJsonMessage({
+      type: "read_messages",
+    });
+  }
+
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: "Connecting",
@@ -117,7 +124,7 @@ const Layout = ({ children, sideHighlight }) => {
               </div>
             </div>
 
-            <div className="h-full pl-5 pb-10 rounded-tr-2xl flex flex-col bg-[#256B58] w-full justify-between">
+            <div className="h-full pl-5 pb-10 rounded-tr-2xl flex flex-col bg-black w-full justify-between">
               <div className="w-full h-max flex flex-col gap-2 pr-5 pt-10">
                 <div className="w-full flex flex-col">
                   <Link href="/">
@@ -125,8 +132,8 @@ const Layout = ({ children, sideHighlight }) => {
                       className={`flex transition-all duration-500  gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "Tech Village"
-                          ? "font-bold bg-gray-100 text-[#256B58]"
-                          : "hover:font-bold hover:bg-gray-100 hover:text-[#256B58]"
+                          ? "font-bold bg-gray-100 text-black"
+                          : "hover:font-bold text-white hover:bg-gray-100 hover:text-black"
                       }
 										`}
                     >
@@ -142,8 +149,8 @@ const Layout = ({ children, sideHighlight }) => {
                       className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "connect"
-                        ? "font-bold bg-gray-100 text-[#256B58]"
-                        : "hover:font-bold hover:bg-gray-100 hover:text-[#256B58]"
+                        ? "font-bold bg-gray-100 text-black"
+                        : "hover:font-bold hover:bg-gray-100 hover:text-black"
                       }
 										`}
                     >
@@ -159,8 +166,8 @@ const Layout = ({ children, sideHighlight }) => {
                       className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "sharepad"
-                        ? "font-bold bg-gray-100 text-[#256B58]"
-                        : "hover:font-bold hover:bg-gray-100 hover:text-[#256B58]"
+                        ? "font-bold bg-gray-100 text-black"
+                        : "hover:font-bold hover:bg-gray-100 hover:text-black"
                       }
 										`}
                     >
@@ -173,11 +180,11 @@ const Layout = ({ children, sideHighlight }) => {
                 <div className="w-full flex flex-col">
                   <Link href="/inbox">
                     <div
-                      className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
+                      className={`flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "inbox"
-                        ? "font-bold bg-gray-100 text-[#256B58]"
-                        : "hover:font-bold hover:bg-gray-100 hover:text-[#256B58]"
+                        ? "font-bold bg-gray-100 text-black"
+                        : "hover:font-bold text-white hover:bg-gray-100 hover:text-black"
                       }
 										`}
                     >
@@ -193,8 +200,8 @@ const Layout = ({ children, sideHighlight }) => {
                       className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "profile"
-                        ? "font-bold bg-gray-100 text-[#256B58]"
-                        : "hover:font-bold hover:bg-gray-100 hover:text-[#256B58]"
+                        ? "font-bold bg-gray-100 text-black"
+                        : "hover:font-bold hover:bg-gray-100 hover:text-black"
                       }
 										`}
                     >
@@ -222,7 +229,9 @@ const Layout = ({ children, sideHighlight }) => {
           </div>
         </nav>
         <nav className="fixed bg-white top-0 left-0 w-full h-20 px-14 gap-4 flex justify-end items-center z-40">
-          <div className="relative"><AiOutlineBell className="text-lg" /><div className="absolute top-2 right-2">{unreadMessageCount}</div></div>
+          <div className="relative"><AiOutlineBell className="text-lg cursor-pointer" onClick={handleSendNotification}/>
+            <div className="absolute -top-2 -right-2">{unreadMessageCount > 0 ? unreadMessageCount : ""}</div>
+          </div>
           
 
           <Link href="/profile/">

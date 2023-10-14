@@ -37,7 +37,7 @@ const Index = () => {
   // MESSAGE INPUT STATE
   const [messageText, setMessageText] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const inputRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   const usersName = chatName ? chatName : ""
   const userPicture = avatarUrl ? avatarUrl : ""
@@ -99,10 +99,7 @@ const Index = () => {
         switch (data.type) {
           case "chat_message_echo":
             setMessageHistory((prev) => [...prev, data.message]);
-            sendJsonMessage({
-              type: "read_messages",
-            });
-            console.log("message received");
+
             break;
 
           case "last_50_messages":
@@ -162,13 +159,22 @@ const Index = () => {
     }
   };
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }) 
+   }
+
   useEffect(() => {
     fetchInfo();
   }, []);
 
   useEffect(() => {
     router.events.on("routeChangeComplete", () => {});
+
   }, [router]);
+
+  useEffect(() => {
+scrollToBottom()
+  }, [messageHistory])
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: "Connecting",
@@ -196,17 +202,14 @@ const Index = () => {
           {/* CONVERSATION LIST */}
 
           <div className="relative grow shadow overflow-hidden h-[calc(100vh - 150px)] flex justify-center">
-            <div className="grow relative p-4 py-1 overflow-hidden h-4/6 max-w-3xl">
+            <div className="grow relative p-4 py-1 overflow-hidden max-h-[450px] pt-10 max-w-3xl">
               <Toolbar names={usersName} avatar={userPicture} />
-              <div className="scrollbar">
+              <div className="scrollbar h-full">
                 <div
-                  className="mx-auto max-w-6xl px-14 py-14 pb-32"
-                  style={{
-                    maxHeight: "calc(100vh - 150px)",
-                    overflowY: "auto",
-                  }}
+                  className="mx-auto max-w-6xl px-14 py-4 pb-4 max-h-full overflow-y-auto"
+
                 >
-                  <div>
+                  <div className="">
                     {messageHistory.length > 0 && (
                       <div className="message-list flex flex-col gap-1">
                         {messageHistory.map((message, index) => (
@@ -229,6 +232,7 @@ const Index = () => {
                       </div>
                     )}
                   </div>
+                  <div ref={messagesEndRef}></div>
                 </div>
               </div>
             </div>

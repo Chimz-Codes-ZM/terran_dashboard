@@ -17,7 +17,7 @@ const MessageInput = ({ roomName, userId }) => {
   const [socketUrl, setSocketUrl] = useState(
     `wss://baobabpad-334a8864da0e.herokuapp.com/ws/chat/${userId}/${userId}${roomName}/`
   );
-  const { sendMessage, lastMessage, readyState, sendJsonMessage } =
+  const { readyState, sendJsonMessage } =
     useWebSocket(socketUrl);
 
   const handleSendInput = () => {

@@ -4,6 +4,7 @@ import Head from "next/head";
 import MessageInput from "./MessageInput";
 import ConversationList from "./conversationList";
 import MessageList from "./MessageList";
+import Start_chat from "../illustrations/start_chat";
 
 import { JellyTriangle } from "@uiball/loaders";
 
@@ -34,7 +35,7 @@ const Inbox = () => {
         ) : (
           <div className="flex custom-height">
             <MessageList />
-            <ConversationList />
+            <Start_chat />
           </div>
         )}
       </Layout>

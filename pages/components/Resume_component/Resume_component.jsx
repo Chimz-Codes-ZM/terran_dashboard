@@ -75,7 +75,7 @@ const Resume_component = ({
               </div>
             </div>
           </div>
-          <div className="absolute top-[-3rem] lg:top-[-3.5rem] -left-12 w-40 lg:w-[13rem] h-40 lg:h-[13rem] bg-teal-400 rounded-full"></div>
+          <div className="absolute top-[-3rem] lg:top-[-3.5rem] -left-12 w-40 lg:w-[13rem] h-40 lg:h-[13rem] bg-[#F6CAC7] rounded-full"></div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-24 items-start mt-12 lg:mt-24">
@@ -139,7 +139,7 @@ const Resume_component = ({
           <div>
             {/* <!-- Profile --> */}
             <h3 className="border-b-2 border-gray-300 pb-2 text-2xl font-semibold">
-              Profile
+              Bio
             </h3>
             <p className="p-2">{bio}</p>
 
@@ -156,7 +156,7 @@ const Resume_component = ({
             ))}
 
             {/* <!-- Education --> */}
-            <h3 class="mt-12 lg:mt-16 font-semibold text-3xl pb-2 border-b-2 border-gray-300">
+            <h3 class="mt-12 lg:mt-16 font-semibold text-2xl pb-2 border-b-2 border-gray-300">
               Education
             </h3>
 

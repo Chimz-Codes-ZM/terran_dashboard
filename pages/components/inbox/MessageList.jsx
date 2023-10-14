@@ -42,7 +42,7 @@ const [conversations, setConversations] = useState(null)
     };
 
   return (
-    <div className="px-2 md:w-72 max-w-72">
+    <div className="px-2 md:w-72 max-w-72 border-r">
       {conversations?.length > 0 ? (
         conversations.map((convo) => (
           <a href={convo.route} key={convo.id}>
