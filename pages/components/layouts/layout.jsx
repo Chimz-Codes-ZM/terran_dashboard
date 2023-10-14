@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -27,16 +27,19 @@ const Layout = ({ children, sideHighlight }) => {
   const [showNotification, setShowNotification] = useState(false)
   const [id, setId] = useState("")
   const router = useRouter();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/");
-  };
+  const notificationRef = useRef();
 
 
   const { data: session } = useSession();
 
-
+  const handleClickOutsideNotification = (event) => {
+    if (
+      notificationRef.current &&
+      !notificationRef.current.contains(event.target)
+    ) {
+      setShowNotification(false);
+    }
+  };
 
   useEffect(() => {
     if (session) {
@@ -66,9 +69,15 @@ const Layout = ({ children, sideHighlight }) => {
     fetchData();
   }, []);
 
+
   useEffect(() => {
-    console.log(userData);
-  }, [userData]);
+    document.addEventListener("mousedown", handleClickOutsideNotification);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideNotification);
+
+    };
+  }, []);
   
 
   const { readyState, sendJsonMessage } = useWebSocket(`wss://baobabpad-334a8864da0e.herokuapp.com/ws/chat_notifications/${id}/`, 
@@ -89,7 +98,7 @@ const Layout = ({ children, sideHighlight }) => {
           setUnreadMessageCount((count) => (count += 1));
           setUnreadMessageCount(data.count)
           console.log(data.content)
-          // set
+          setNotificationContent(data.content)
           break;
         default:
           console.error("Unknown message type!");
@@ -224,10 +233,10 @@ const Layout = ({ children, sideHighlight }) => {
 
               <div className="w-full h-max rounded-r-full pt-5 pr-5">
                 <div className="w-full flex flex-col">
-                  <div href="/" className="" onClick={signOut}>
+                  <div className="cursor-pointer" onClick={signOut}>
                     <div
                       className="flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1 text-gray-100 hover:font-bold hover:bg-gray-100 hover:text-[#256B58] cursor-pointer "
-                      onClick={handleLogout}
+                      
                     >
                       <BiLogOut className="text-xl logout" />
                       <h1 className="hidden sm:block">Logout</h1>
@@ -241,76 +250,40 @@ const Layout = ({ children, sideHighlight }) => {
         <nav className="fixed bg-white top-0 left-0 w-full h-20 px-14 gap-4 flex justify-end items-center z-40">
           <div className="relative"><AiOutlineBell className="text-lg cursor-pointer" onClick={handleShowNotification}/>
             <div className="absolute -top-2 -right-2">{unreadMessageCount > 0 ? unreadMessageCount : ""}</div>
-            <div><div className="relative">
+            <div ref={notificationRef}>
+              <div className="relative">
   <div
     className="inline-flex items-center overflow-hidden rounded-md border bg-white"
   >
   </div>
-{showNotification && (
-    <div
+  {showNotification && (
+  <div
     className="absolute end-0 z-10 w-56 rounded-md border border-gray-100 bg-white shadow-lg"
     role="menu"
   >
-    <div className="p-2">
-      <a
-        href="#"
-        className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-        role="menuitem"
-      >
-        View on Storefront
-      </a>
-
-      <a
-        href="#"
-        className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-        role="menuitem"
-      >
-        View Warehouse Info
-      </a>
-
-      <a
-        href="#"
-        className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-        role="menuitem"
-      >
-        Duplicate Product
-      </a>
-
-      <a
-        href="#"
-        className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-        role="menuitem"
-      >
-        Unpublish Product
-      </a>
-
-      <form method="POST" action="#">
-        <button
-          type="submit"
-          className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-          role="menuitem"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-            />
-          </svg>
-
-          Delete Product
-        </button>
-      </form>
-    </div>
+    {notificationContent && notificationContent.length > 0 ? (
+      // Render notifications when notificationContent is not empty
+      notificationContent.map((notification, index) => (
+        <div className="p-2" key={index}>
+          <Link href={`/inbox/${notification.conversation_name}`}>
+            <div
+              href="#"
+              className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+              role="menuitem"
+            >
+              {notification.message}
+            </div>
+          </Link>
+        </div>
+      ))
+    ) : (
+      <div className="p-2">
+        No notifications.
+      </div>
+    )}
   </div>
 )}
+
 
 </div>
 </div>
