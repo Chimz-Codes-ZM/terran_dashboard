@@ -77,12 +77,12 @@ const MemberInfo = () => {
           soft_skills={info[0]?.soft_skills}
         />
 
-        <div
+        {/* <div
           className="px-1 rounded border cursor-pointer w-fit bg-gray-900 text-white"
           onClick={() => toPDF()}
         >
           Download
-        </div>
+        </div> */}
       </Layout>
     </>
   );

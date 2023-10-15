@@ -46,79 +46,11 @@ function Login() {
 
   const { username, password } = formData;
 
-
-
   const onChange = (e) => {
     setLoginError(false);
     setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log(formData)
   };
-
-  // const onSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   console.log("Before token fetch");
-
-  //   // const response = await fetch("http://127.0.0.1:8000/api/token/", {
-  //   const response = await fetch(
-  //     "https://baobabpad-334a8864da0e.herokuapp.com/api/token/",
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         email: username,
-  //         password: password,
-  //       }),
-  //     }
-  //   );
-
-
-  //   const data = await response.json();
-
-  //   if (response.ok) {
-  //     localStorage.setItem("token", data.access);
-
-  //     const token = data.access;
-  //     const decodedToken = jwt_decode(token);
-  //     const id = decodedToken.user_id;
-
-  //     // const response = await fetch(`http://127.0.0.1:8000/api/user_type/${id}/`, {
-  //     const response = await fetch(
-  //       `https://baobabpad-334a8864da0e.herokuapp.com/api/user_type/${id}/`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-
-  //     if (response.ok) {
-  //       // console.log(response.text());
-
-  //       const responseData = await response.text();
-
-  //        if (responseData === `"company profile"`|| responseData === `"talent profile"`) {
-          
-  //         router.push("/dashboard");
-  //       }
-         
-  //       else if (responseData === `"village profile"`) {
-          
-  //         router.push("/virtual_tech_village");
-  //       }
-  //       else if (responseData === `"village company profile"`) {
-          
-  //         router.push("/virtual_tech_village");
-  //       }
-  //     } else {
-  //       // Handle error cases (e.g., network errors)
-  //       handleLoginError();
-  //     }
-  //   }
-  // };
 
   const handleLoginUser = async (e) => {    
     e.preventDefault();
@@ -230,7 +162,7 @@ function Login() {
           <div className="border-b w-full"></div>
           <p className="self-center">
             <Link
-              href="./forgot_password"
+              href=""
               className="border-b-2 border-[#EFBE6D]"
             >
               Forgot your password?

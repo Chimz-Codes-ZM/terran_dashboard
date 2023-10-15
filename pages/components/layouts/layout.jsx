@@ -136,7 +136,7 @@ const Layout = ({ children, sideHighlight }) => {
           <div className="w-full h-full flex flex-col">
             <div
               className="w-full pl-5 flex-shrink-0 h-20 gap-4 flex items-center cursor-pointer"
-              onClick={signOut}
+              onClick={() => signOut()}
             >
               <div className="relative md:h-20 md:w-40 h-10 w-20 rounded">
                 <Image src={Logo} priority alt="logo" fill />
@@ -233,9 +233,9 @@ const Layout = ({ children, sideHighlight }) => {
 
               <div className="w-full h-max rounded-r-full pt-5 pr-5">
                 <div className="w-full flex flex-col">
-                  <div className="cursor-pointer" onClick={signOut}>
+                  <div className="cursor-pointer" onClick={() => signOut()}>
                     <div
-                      className="flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1 text-gray-100 hover:font-bold hover:bg-gray-100 hover:text-[#256B58] cursor-pointer "
+                      className="flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1 text-gray-100 hover:font-bold hover:bg-gray-100 hover:text-black cursor-pointer "
                       
                     >
                       <BiLogOut className="text-xl logout" />
@@ -248,7 +248,7 @@ const Layout = ({ children, sideHighlight }) => {
           </div>
         </nav>
         <nav className="fixed bg-white top-0 left-0 w-full h-20 px-14 gap-4 flex justify-end items-center z-40">
-          {connectionStatus}
+          {/* {connectionStatus} */}
           <div className="relative"><AiOutlineBell className="text-lg cursor-pointer" onClick={handleShowNotification}/>
             <div className="absolute -top-2 -right-2">{unreadMessageCount > 0 ? unreadMessageCount : ""}</div>
             <div ref={notificationRef}>
