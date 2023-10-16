@@ -358,9 +358,16 @@ html {
 /* Custom inbox height */
 
 .custom-height {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 100px);
 }
 
+.custom-height::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-height::-webkit-scrollbar-track {
+  background: transparent;
+}
 
 .scrollbar::-webkit-scrollbar {
   display: none;

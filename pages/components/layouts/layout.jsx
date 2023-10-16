@@ -332,7 +332,7 @@ const Layout = ({ children, sideHighlight }) => {
             </div>
           </Link>
         </nav>
-        <div className="w-full h-screen overflow-y-scroll px-4 py-24">
+        <div className="w-full h-screen overflow-y-scroll px-4 pt-24">
           <div className="w-full h-max flex flex-col gap-5">{children}</div>
         </div>
       </main>
