@@ -481,7 +481,7 @@ const Virtual_Tech_Village = () => {
 
 
   return (
-    <div className="flex flex-col gap-5 relative" ref={parent}>
+    <div className="flex flex-col gap-5 relative pb-8" ref={parent}>
             <div ref={memberStartRef}></div>
       <div className="flex flex-col md:flex-row md:justify-between md:flex-wrap gap-2">
         <div className="flex flex-wrap gap-4">
