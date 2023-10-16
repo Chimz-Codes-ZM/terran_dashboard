@@ -96,7 +96,7 @@ const Complete_company_profile = () => {
     );
     if (response.ok) {
       alert("Profile update complete!");
-      router.push("/virtual_tech_village");
+      router.push("/");
     } else {
       alert("Something went wrong, please try again!");
     }
