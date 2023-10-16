@@ -134,14 +134,13 @@ const Layout = ({ children, sideHighlight }) => {
       <main className="h-screen w-screen flex relative">
         <nav className="sm:w-60 w-20 transition-all z-50 h-screen relative pt-10 group">
           <div className="w-full h-full flex flex-col">
-            <div
+            <Link href="/"
               className="w-full pl-5 flex-shrink-0 h-20 gap-4 flex items-center cursor-pointer"
-              onClick={() => signOut()}
             >
               <div className="relative md:h-20 md:w-40 h-10 w-20 rounded">
                 <Image src={Logo} priority alt="logo" fill />
               </div>
-            </div>
+            </Link>
 
             <div className="h-full pl-5 pb-10 rounded-tr-2xl flex flex-col bg-black w-full justify-between">
               <div className="w-full h-max flex flex-col gap-2 pr-5 pt-10">
