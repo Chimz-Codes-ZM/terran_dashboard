@@ -9,7 +9,7 @@ const SharepadLayout = ({ children, title, description}) => {
                 <div className='w-full flex flex-col gap-2'>
                     <h1 className='text-green-600'>Virtual Tech Village</h1>
                     <div className='w-full flex flex-col gap-2 pl-2'>
-                        <Link href='/virtual_tech_village/sharepad'>
+                        <Link href='/sharepad'>
                             <h1 className={
                               title === 'knowledgehub'
                                 ? 'border-l-4 pl-2 border-green-600'
@@ -19,7 +19,7 @@ const SharepadLayout = ({ children, title, description}) => {
                             </h1>
                         </Link>
 
-                        <Link href='/virtual_tech_village/events'>
+                        <Link href='/events'>
                             <h1 className={
                               title === 'events'
                                 ? 'border-l-4 pl-2 border-green-600'
@@ -29,7 +29,7 @@ const SharepadLayout = ({ children, title, description}) => {
                             </h1>
                         </Link>
                        
-                        <Link href='/virtual_tech_village/resources'>
+                        <Link href='/resources'>
                             <h1 className={
                               title === 'resources'
                                 ? 'border-l-4 pl-2 border-green-600'
@@ -39,7 +39,7 @@ const SharepadLayout = ({ children, title, description}) => {
                             </h1>
                         </Link>
 
-                        <Link href='/virtual_tech_village/careers'>
+                        <Link href='/careers'>
                             <h1 className={
                               title === 'careers'
                                 ? 'border-l-4 pl-2 border-green-600'

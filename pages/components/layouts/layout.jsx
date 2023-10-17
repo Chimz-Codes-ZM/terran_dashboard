@@ -22,13 +22,12 @@ import { useSession } from "next-auth/react";
 
 const Layout = ({ children, sideHighlight }) => {
   const [userData, setUserData] = useState(null);
-  const [unreadMessageCount, setUnreadMessageCount] = useState(null)
-  const [notificationContent, setNotificationContent] = useState(null)
-  const [showNotification, setShowNotification] = useState(false)
-  const [id, setId] = useState("")
+  const [unreadMessageCount, setUnreadMessageCount] = useState(null);
+  const [notificationContent, setNotificationContent] = useState(null);
+  const [showNotification, setShowNotification] = useState(false);
+  const [id, setId] = useState("");
   const router = useRouter();
   const notificationRef = useRef();
-
 
   const { data: session } = useSession();
 
@@ -50,9 +49,8 @@ const Layout = ({ children, sideHighlight }) => {
     const token = localStorage.getItem("token");
 
     const decodedToken = jwt_decode(token);
-    setId(decodedToken.user_id)
-    const user_id = decodedToken.user_id
-  
+    setId(decodedToken.user_id);
+    const user_id = decodedToken.user_id;
 
     async function fetchData() {
       try {
@@ -69,58 +67,55 @@ const Layout = ({ children, sideHighlight }) => {
     fetchData();
   }, []);
 
-
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutsideNotification);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideNotification);
-
     };
   }, []);
-  
 
-  const { readyState, sendJsonMessage } = useWebSocket(`wss://baobabpad-334a8864da0e.herokuapp.com/ws/chat_notifications/${id}/`, 
-  {
-    onOpen: () => {
-      console.log("Connected to Notifications!");
-    },
-    onClose: () => {
-      console.log("Disconnected from Notifications!");
-    },
-    onMessage: (e) => {
-      const data = JSON.parse(e.data);
-      switch (data.type) {
-        case "unread_count":
-
-          break;
-        case "new_message_notification":
-          setUnreadMessageCount((count) => (count += 1));
-          setUnreadMessageCount(data.count)
-          console.log(data.content)
-          setNotificationContent(data.content)
-          break;
-        default:
-          console.error("Unknown message type!");
-          break;
-      }
-    },
-    retryOnError: true,
-  }
-  )
+  const { readyState, sendJsonMessage } = useWebSocket(
+    `wss://baobabpad-334a8864da0e.herokuapp.com/ws/chat_notifications/${id}/`,
+    {
+      onOpen: () => {
+        console.log("Connected to Notifications!");
+      },
+      onClose: () => {
+        console.log("Disconnected from Notifications!");
+      },
+      onMessage: (e) => {
+        const data = JSON.parse(e.data);
+        switch (data.type) {
+          case "unread_count":
+            break;
+          case "new_message_notification":
+            setUnreadMessageCount((count) => (count += 1));
+            setUnreadMessageCount(data.count);
+            console.log(data.content);
+            setNotificationContent(data.content);
+            break;
+          default:
+            console.error("Unknown message type!");
+            break;
+        }
+      },
+      retryOnError: true,
+    }
+  );
 
   const handleSendNotification = () => {
     sendJsonMessage({
       type: "read_notifications",
     });
-  }
+  };
 
   const handleShowNotification = () => {
     setShowNotification(!showNotification);
     sendJsonMessage({
       type: "read_messages",
     });
-  }
+  };
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: "Connecting",
@@ -134,7 +129,8 @@ const Layout = ({ children, sideHighlight }) => {
       <main className="h-screen w-screen flex relative">
         <nav className="sm:w-60 w-20 transition-all z-50 h-screen relative pt-10 group">
           <div className="w-full h-full flex flex-col">
-            <Link href="/"
+            <Link
+              href="/"
               className="w-full pl-5 flex-shrink-0 h-20 gap-4 flex items-center cursor-pointer"
             >
               <div className="relative md:h-20 md:w-40 h-10 w-20 rounded">
@@ -164,11 +160,11 @@ const Layout = ({ children, sideHighlight }) => {
                 <div className="w-full flex flex-col">
                   <Link href="/connect">
                     <div
-                      className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
+                      className={`flex transition-all duration-500  gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "connect"
-                        ? "font-bold bg-gray-100 text-black"
-                        : "hover:font-bold hover:bg-gray-100 hover:text-black"
+                          ? "font-bold bg-gray-100 text-black"
+                          : "hover:font-bold text-white hover:bg-gray-100 hover:text-black"
                       }
 										`}
                     >
@@ -181,11 +177,11 @@ const Layout = ({ children, sideHighlight }) => {
                 <div className="w-full flex flex-col">
                   <Link href="/sharepad">
                     <div
-                      className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
+                      className={`flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "sharepad"
-                        ? "font-bold bg-gray-100 text-black"
-                        : "hover:font-bold hover:bg-gray-100 hover:text-black"
+                          ? "font-bold bg-gray-100 text-black"
+                          : "hover:font-bold text-white hover:bg-gray-100 hover:text-black"
                       }
 										`}
                     >
@@ -201,8 +197,8 @@ const Layout = ({ children, sideHighlight }) => {
                       className={`flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "inbox"
-                        ? "font-bold bg-gray-100 text-black"
-                        : "hover:font-bold text-white hover:bg-gray-100 hover:text-black"
+                          ? "font-bold bg-gray-100 text-black"
+                          : "hover:font-bold text-white hover:bg-gray-100 hover:text-black"
                       }
 										`}
                     >
@@ -215,11 +211,11 @@ const Layout = ({ children, sideHighlight }) => {
                 <div className="w-full flex flex-col">
                   <Link href="/profile">
                     <div
-                      className={`flex transition-all duration-500 text-gray-100 gap-3 flex items-center rounded px-2 py-1
+                      className={`flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1
 											${
                         sideHighlight === "profile"
-                        ? "font-bold bg-gray-100 text-black"
-                        : "hover:font-bold hover:bg-gray-100 hover:text-black"
+                          ? "font-bold bg-gray-100 text-black"
+                          : "hover:font-bold text-white hover:bg-gray-100 hover:text-black"
                       }
 										`}
                     >
@@ -233,10 +229,7 @@ const Layout = ({ children, sideHighlight }) => {
               <div className="w-full h-max rounded-r-full pt-5 pr-5">
                 <div className="w-full flex flex-col">
                   <div className="cursor-pointer" onClick={() => signOut()}>
-                    <div
-                      className="flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1 text-gray-100 hover:font-bold hover:bg-gray-100 hover:text-black cursor-pointer "
-                      
-                    >
+                    <div className="flex transition-all duration-500 gap-3 flex items-center rounded px-2 py-1 text-gray-100 hover:font-bold hover:bg-gray-100 hover:text-black cursor-pointer ">
                       <BiLogOut className="text-xl logout" />
                       <h1 className="hidden sm:block">Logout</h1>
                     </div>
@@ -248,46 +241,60 @@ const Layout = ({ children, sideHighlight }) => {
         </nav>
         <nav className="fixed bg-white top-0 left-0 w-full h-20 px-14 gap-4 flex justify-end items-center z-40">
           {/* {connectionStatus} */}
-          <div className="relative"><AiOutlineBell className="text-lg cursor-pointer" onClick={handleShowNotification}/>
-            <div className="absolute -top-2 -right-2">{unreadMessageCount > 0 ? unreadMessageCount : ""}</div>
+          <div className="relative">
+            <AiOutlineBell
+              className={`text-lg cursor-pointer ${
+                unreadMessageCount > 0 ? "animate-pulse" : ""
+              }`}
+              onClick={handleShowNotification}
+            />
+            <div className="absolute -top-2 -right-4">
+              {unreadMessageCount > 0 ? unreadMessageCount : ""}
+            </div>
             <div ref={notificationRef}>
               <div className="relative">
-  <div
-    className="inline-flex items-center overflow-hidden rounded-md border bg-white"
-  >
-  </div>
-  {showNotification && (
-  <div
-    className="absolute end-0 z-10 w-56 rounded-md border border-gray-100 bg-white shadow-lg"
-    role="menu"
-  >
-    {notificationContent && notificationContent.length > 0 ? (
-      notificationContent.map((notification, index) => (
-        <div className="p-2" key={index}>
-          <Link href={`/${notification.route}`}>
-            <div
-              href="#"
-              className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-              role="menuitem"
-            >
-              {notification.message}
+                <div className="inline-flex items-center overflow-hidden rounded-md border bg-white"></div>
+                {showNotification && (
+                  <div
+                    className="absolute end-0 z-10 w-56 rounded-md border border-gray-100 max-h-40 overflow-x-auto bg-white shadow-lg"
+                    role="menu"
+                  >
+                    {notificationContent && notificationContent.length > 0 ? (
+                      notificationContent.map((notification, index) => (
+                        <div className="p-2" key={index}>
+                          <Link href={`/${notification.route}`}>
+                            <div className="flex items-center gap-2 hover:bg-gray-50 hover:text-gray-700">
+                              <div className="h-8 w-8 relative">
+                                <Image
+                                  src={notification.image}
+                                  fill
+                                  objectFit="cover"
+                                  className="rounded-full"
+                                />
+                              </div>
+                              <div
+                                className="block rounded-lg px-4 py-2 text-sm text-gray-500"
+                                role="menuitem"
+                              >
+                                <div className="flex flex-col">
+                                  <div className="font-semibold">
+                                    {notification.sender}
+                                  </div>
+                                  <div>{notification.message}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="p-2">No notifications.</div>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
-          </Link>
-        </div>
-      ))
-    ) : (
-      <div className="p-2">
-        No notifications.
-      </div>
-    )}
-  </div>
-)}
-
-
-</div>
-</div>
           </div>
-          
 
           <Link href="/profile/">
             <div className="w-max truncate px-4 py-2 transition-all duration-500 hover:bg-gray-100 rounded cursor-pointer flex items-center gap-1 sm:gap-2 rounded">

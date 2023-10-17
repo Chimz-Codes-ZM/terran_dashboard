@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-
+import New_job from "./components/modals/new_job";
 import jwt_decode from "jwt-decode";
 
 import Complete_Profile from "./components/alerts/completeProfile";
@@ -14,6 +14,7 @@ import { JellyTriangle } from "@uiball/loaders";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { BsFillInfoCircleFill } from "react-icons/bs";
+import { FcAddDatabase } from "react-icons/fc";
 
 const CompanyProfile = ({
   company_name,
@@ -94,11 +95,7 @@ const ExpandedCompanyModal = ({
 
         <div className="mt-6 flex gap-4 sm:gap-6">
           <div className="flex gap-4 font-medium text-gray-900">
-            <a
-              href={`${website}`}
-              target="_blank"
-              className=""
-            >
+            <a href={`${website}`} target="_blank" className="">
               <FaExternalLinkSquareAlt />
               {/* THIS NEEDS TO BE FIXED ASAP */}
             </a>
@@ -126,7 +123,7 @@ const Virtual_Tech_Village = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const expandedProfileRef = useRef(null);
   const expandedCompanyRef = useRef(null);
-  const memberStartRef = useRef(null)
+  const memberStartRef = useRef(null);
 
   const [talentPages, setTalentPages] = useState([]);
   const [user, setUser] = useState(null);
@@ -180,13 +177,13 @@ const Virtual_Tech_Village = () => {
     setIsLoading(false);
   };
   const scrollToTop = () => {
-    memberStartRef.current?.scrollIntoView({ behavior: "smooth"})
-  }
+    memberStartRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
     console.log(memberList);
-    checkProfileComplete()
-    scrollToTop()
+    checkProfileComplete();
+    scrollToTop();
   }, [memberList]);
 
   const { companies, individuals } = memberList || {
@@ -217,9 +214,7 @@ const Virtual_Tech_Village = () => {
   };
 
   const handleChatClick = (modalId) => {
-    router.push(
-      `/inbox/${memberList.user[0].user_id}/${modalId}`
-    );
+    router.push(`/inbox/${memberList.user[0].user_id}/${modalId}`);
   };
 
   const checkProfileComplete = () => {
@@ -314,11 +309,8 @@ const Virtual_Tech_Village = () => {
     document.addEventListener("mousedown", handleClickOutsideProfile);
     document.addEventListener("mousedown", handleClickOutsideCompany);
 
-    ;
-
     login();
     handlePageFetch();
-    
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideProfile);
@@ -479,18 +471,18 @@ const Virtual_Tech_Village = () => {
     setCompany(companyInfo);
   };
 
-
   return (
     <div className="flex flex-col gap-5 relative pb-8" ref={parent}>
-            <div ref={memberStartRef}></div>
+      <div ref={memberStartRef}></div>
       <div className="flex flex-col md:flex-row md:justify-between md:flex-wrap gap-2">
         <div className="flex flex-wrap gap-4">
-          {(memberList.user[0].account_type === "village talent profile" || memberList.user[0].account_type === "village admin profile") && (
+          {(memberList.user[0].account_type === "village talent profile" ||
+            memberList.user[0].account_type === "village admin profile") && (
             <div
               className={` pb-1 w-max cursor-pointer  ${
                 memberShow
                   ? "border-b-2 border-black"
-                  : "hover:border-b-2 hover:border-gray-300 delay-200 ease-in-out transition-colors"
+                  : "border-b-2 hover:border-gray-300 border-white ease-in-out transition-colors"
               }`}
               onClick={handleMemberShow}
             >
@@ -501,7 +493,8 @@ const Virtual_Tech_Village = () => {
             </div>
           )}
 
-          {(memberList.user[0]?.account_type === "village company profile" || memberList.user[0].account_type === "village admin profile") && (
+          {(memberList.user[0]?.account_type === "village company profile" ||
+            memberList.user[0].account_type === "village admin profile") && (
             <div
               className={`"pb-1 w-max cursor-pointer ${
                 companyShow
@@ -594,7 +587,8 @@ const Virtual_Tech_Village = () => {
         )}
       </div>
 
-      {(memberList.user[0]?.account_type === "village talent profile" || memberList.user[0].account_type === "village admin profile") && (
+      {(memberList.user[0]?.account_type === "village talent profile" ||
+        memberList.user[0].account_type === "village admin profile") && (
         <AnimatePresence>
           {memberShow && (
             <motion.div
@@ -725,6 +719,10 @@ const Virtual_Tech_Village = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <div className="fixed bottom-5 right-10 rounded p-2 bg-white text-2xl border cursor-pointer transition transform hover:scale-105">
+        <FcAddDatabase />
+      </div>
     </div>
   );
 };
